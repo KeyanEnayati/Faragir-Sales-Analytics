@@ -1,26 +1,5 @@
 # 📈 Faragir Sanat Mehrbin Sales Performance & Customer Segmentation Dashboard (2018–2020)
 
-## 📚 Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Data Cleaning & Preprocessing](#data-cleaning--preprocessing)
-3. [Monthly Sales KPIs](#monthly-sales-kpis)
-   - [Monthly Revenue, Orders & Unique Customers](#monthly-revenue-orders--unique-customers)
-   - [Revenue Growth Rate](#revenue-growth-rate)
-   - [Customer Cohort Analysis](#customer-cohort-analysis)
-4. [Customer Segmentation (RFM)](#customer-segmentation-rfm)
-   - [RFM Score Calculation](#rfm-score-calculation)
-   - [Customer Group Classification](#customer-group-classification)
-5. [Top Customers by Spend](#top-customers-by-spend)
-6. [Advanced Sales & Operational Analysis](#advanced-sales--operational-analysis)
-   - [Top Profitable Products](#top-profitable-products)
-   - [Branch Delivery Efficiency](#branch-delivery-efficiency)
-   - [Sales Rep Performance](#sales-rep-performance)
-   - [Repeat Customer Rate](#repeat-customer-rate)
-   - [Monthly Financial Health](#monthly-financial-health)
-
----
-
 ## 🔖 Project Overview
 
 This project presents a comprehensive analysis of sales performance and customer behavior for Faragir Sanat Mehrbin, a laboratory equipment manufacturing company. The objective is to clean raw transactional data, generate actionable KPIs, and create segmentation and trend insights that can drive business decisions.
@@ -29,7 +8,7 @@ Using SQL, we processed and analyzed 3 years of transaction-level data (2018–2
 
 ---
 
-## 📂 Dataset & Table Structure
+## 📂 Step 1 .Dataset & Table Structure
 
 The dataset was imported into a SQL database and structured using the following table:
 
@@ -56,7 +35,7 @@ CREATE TABLE sales_data (
 
 ---
 
-## 🧹 Data Cleaning Pipeline (Steps 01–07)
+## 🧹 Step 2.Data Cleaning Pipeline (Steps 01–07)
 
 The raw data underwent structured cleaning:
 
@@ -116,7 +95,7 @@ WHERE SalesOrderDate < '2018-01-01' OR SalesOrderDate > '2020-12-31';
 **📄 Output**: Cleaned dataset saved to: `sales KPI.xlsx`
 
 ---
-## 📊 Sales KPIs Analysis
+## 📊 Step 3.Sales KPIs Analysis
 
 Understanding key performance indicators (KPIs) is crucial for any business. For **Faragir Sanat Mehrbin**, we calculated foundational KPIs using SQL to assess:
 
@@ -283,7 +262,7 @@ LIMIT 10;
 📁 Full dataset available in the sheet `"Top 10 Customers"` inside the **sales KPI.xlsx** file.
 
 
-## 🎯 Customer Segmentation using RFM
+## 🎯 Step 4.Customer Segmentation using RFM
 
 Segmenting customers based on **Recency**, **Frequency**, and **Monetary Value** (RFM) allows *Faragir Sanat Mehrbin* to target campaigns more effectively, retain valuable clients, and re-engage churned customers.
 
@@ -355,7 +334,7 @@ FROM vw_customer_rfm;
 📁 Full segmentation results are available in the `customer segmentation.xlsx` file.
 
 
-### 📊 Views for Power BI Dashboard
+## 📊 Step 5.Views for Power BI Dashboard
 
 To support visual reporting in Power BI, we created structured views for key monthly metrics, growth tracking, and customer cohort analysis. These views simplify data transformations and support plug-and-play integration with BI tools.
 
@@ -457,7 +436,7 @@ SELECT * FROM cohort_data;
 📁 Data exported in "views for dashboards.xlsx" for direct Power BI/Excel use.
 
 
-### 🔍 Advanced Sales & Operational Analysis
+## 🔍 Step 6.Advanced Sales & Operational Analysis
 
 To extract deeper insights from the sales dataset, a set of advanced SQL queries were developed to evaluate profitability, delivery efficiency, representative performance, repeat customer rate, and financial health over time.
 
