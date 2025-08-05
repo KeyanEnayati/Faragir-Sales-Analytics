@@ -1,26 +1,36 @@
--- Monthly Revenue
-SELECT
-  DATE_TRUNC('month', SalesOrderDate) AS sale_month,
-  SUM(QuantityOrdered * UnitSalePrice) AS total_revenue,
-  SUM(QuantityOrdered * UnitProductionCost) AS total_cost,
-  SUM(QuantityOrdered * UnitSalePrice) - SUM(QuantityOrdered * UnitProductionCost) AS profit
-FROM sales_data
-GROUP BY sale_month
-ORDER BY sale_month;
+-- ================================
+-- SALES KPIs ANALYSIS
+-- ================================
 
--- Top 5 Products
+-- 🔹 Overall KPIs
 SELECT
-  ProductCode,
+  COUNT(DISTINCT InvoiceNumber) AS total_orders,
+  COUNT(DISTINCT CustomerID) AS unique_customers,
+  ROUND(SUM(QuantityOrdered * UnitSalePrice), 2) AS total_revenue,
+  ROUND(AVG(QuantityOrdered * UnitSalePrice), 2) AS avg_order_value
+FROM sales_data;
+
+-- 🔹 Revenue by Sales Channel
+SELECT
+  SalesChannel,
+  COUNT(DISTINCT InvoiceNumber) AS total_orders,
   SUM(QuantityOrdered * UnitSalePrice) AS revenue
 FROM sales_data
-GROUP BY ProductCode
-ORDER BY revenue DESC
-LIMIT 5;
+GROUP BY SalesChannel;
 
--- Revenue by Branch
+-- 🔹 Top 10 customers by revenue:
 SELECT
-  BranchCode,
-  SUM(QuantityOrdered * UnitSalePrice) AS branch_revenue
+  CustomerID,
+  SUM(QuantityOrdered * UnitSalePrice) AS customer_revenue
 FROM sales_data
-GROUP BY BranchCode
-ORDER BY branch_revenue DESC;
+GROUP BY CustomerID
+ORDER BY customer_revenue DESC
+LIMIT 10;
+
+-- 🔹 Monthly Revenue Trend
+SELECT
+  SUBSTR(SalesOrderDate, 1, 7) AS month,
+  ROUND(SUM(QuantityOrdered * UnitSalePrice), 2) AS monthly_revenue
+FROM sales_data
+GROUP BY month
+ORDER BY month;
