@@ -18,22 +18,24 @@ This project analyzes sales data for **Faragir Sanat Mehrbin**, an Iranian lab e
 
 ## 📁 Project Structure
 
-```
-Faragir-Sales-Analytics/
-├── data/                      # Raw dataset (Excel)
-│   └── Faragir_Sales_Data_Full.xlsx
-├── sql/                       # All SQL scripts
-│   ├── 01_create_tables.sql
-│   ├── 02_data_cleaning.sql
-│   ├── 03_sales_kpis.sql
-│   ├── 04_customer_segmentation.sql
-│   ├── 05_views_for_dashboard.sql
-│   └── 06_advanced_analysis.sql
-├── outputs/                   # Exported CSV results (optional)
-│   └── .gitkeep
-├── dashboard/                 # Power BI or Excel dashboards
-│   └── .gitkeep
-├── docs/                      # Documentation and visuals
-│   └── .gitkeep
-└── README.md                  # Project overview and usage
-```
+- 📂 `data/` — Raw dataset  
+  - 📄 `Faragir_Sales_Data_Full.xlsx`
+
+- 📂 `sql/` — All SQL scripts  
+  - 📜 `01_create_tables.sql` — Create sales_data table  
+  - 📜 `02_data_cleaning.sql` — Clean and prepare data  
+  - 📜 `03_sales_kpis.sql` — Revenue, profit, branch KPIs  
+  - 📜 `04_customer_segmentation.sql` — RFM segmentation logic  
+  - 📜 `05_views_for_dashboard.sql` — Views for Power BI/Excel  
+  - 📜 `06_advanced_analysis.sql` — YoY, cohort, growth analysis  
+
+- 📂 `outputs/` — Exported results (CSV)  
+  - 📄 `.gitkeep`
+
+- 📂 `dashboard/` — Power BI / Excel dashboards  
+  - 📄 `.gitkeep`
+
+- 📂 `docs/` — Visuals, charts, and other documentation  
+  - 📄 `.gitkeep`
+
+- 📘 `README.md` — Project explanation and guidance
