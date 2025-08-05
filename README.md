@@ -1,5 +1,19 @@
 # 📈 Faragir Sanat Mehrbin Sales Performance & Customer Segmentation Dashboard (2018–2020)
 
+# 📚 Table of Contents
+
+  - [🔖 Project Overview](#project-overview)
+  - [📂 Step 1. Dataset & Table Structure](#step-1-dataset--table-structure)
+  - [🧹 Step 2. Data Cleaning Pipeline (Steps 01–07)](#step-2-data-cleaning-pipeline-steps-01–07)
+  - [📊 Step 3. Sales KPIs Analysis](#step-3-sales-kpis-analysis)
+    - [🧮 Code: Overall KPIs](#code-overall-kpis)
+    - [📊 Revenue Breakdown by Sales Channel](#revenue-breakdown-by-sales-channel)
+    - [📅 Monthly Revenue Aggregation](#monthly-revenue-aggregation)
+    - [🥇 Top 10 Customers by Revenue](#top-10-customers-by-revenue)
+  - [🎯 Step 4. Customer Segmentation using RFM](#step-4-customer-segmentation-using-rfm)
+  - [📊 Step 5. Views for Power BI Dashboard](#step-5-views-for-power-bi-dashboard)
+  - [🔍 Step 6. Advanced Sales & Operational Analysis](#step-6-advanced-sales--operational-analysis)
+
 ## 🔖 Project Overview
 
 This project presents a comprehensive analysis of sales performance and customer behavior for Faragir Sanat Mehrbin, a laboratory equipment manufacturing company. The objective is to clean raw transactional data, generate actionable KPIs, and create segmentation and trend insights that can drive business decisions.
@@ -508,6 +522,7 @@ ORDER BY month;
 <details><summary>💰 Top 10 Most Profitable Products</summary>
 
 | ProductCode | total_profit | total_revenue | total_cost |
+|------------ |--------------|----------------|-------------|
 | 1010        | 434,924.47   | 1,088,267.60    | 653,343.13   |
 | 1004        | 428,063.67   | 1,149,277.80    | 721,214.13   |
 | 1071        | 424,500.81   | 1,075,772.10    | 651,271.29   |
