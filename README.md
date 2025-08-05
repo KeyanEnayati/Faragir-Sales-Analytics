@@ -18,20 +18,22 @@ This project analyzes sales data for **Faragir Sanat Mehrbin**, an Iranian lab e
 
 ## 📁 Project Structure
 
+```
 Faragir-Sales-Analytics/
-├── data/ # Raw dataset (Excel)
-│ └── Faragir_Sales_Data_Full.xlsx
-├── sql/ # All SQL scripts
-│ ├── 01_create_tables.sql
-│ ├── 02_data_cleaning.sql
-│ ├── 03_sales_kpis.sql
-│ ├── 04_customer_segmentation.sql
-│ ├── 05_views_for_dashboard.sql
-│ └── 06_advanced_analysis.sql
-├── outputs/ # Exported CSV results (optional)
-│ └── .gitkeep # Placeholder (optional)
-├── dashboard/ # Power BI or Excel dashboards (optional)
-│ └── .gitkeep
-├── docs/ # Documentation and visuals (optional)
-│ └── .gitkeep
-└── README.md # Project overview and usage
+├── data/                      # Raw dataset (Excel)
+│   └── Faragir_Sales_Data_Full.xlsx
+├── sql/                       # All SQL scripts
+│   ├── 01_create_tables.sql
+│   ├── 02_data_cleaning.sql
+│   ├── 03_sales_kpis.sql
+│   ├── 04_customer_segmentation.sql
+│   ├── 05_views_for_dashboard.sql
+│   └── 06_advanced_analysis.sql
+├── outputs/                   # Exported CSV results (optional)
+│   └── .gitkeep
+├── dashboard/                 # Power BI or Excel dashboards
+│   └── .gitkeep
+├── docs/                      # Documentation and visuals
+│   └── .gitkeep
+└── README.md                  # Project overview and usage
+```
