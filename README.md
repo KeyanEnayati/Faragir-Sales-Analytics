@@ -107,7 +107,6 @@ DELETE FROM sales_data
 WHERE SalesOrderDate < '2018-01-01' OR SalesOrderDate > '2020-12-31';
 ```
 
-**📄 Output**: Cleaned dataset saved to: `sales KPI.xlsx`
 
 ---
 ## 📊 Step 3.Sales KPIs Analysis
