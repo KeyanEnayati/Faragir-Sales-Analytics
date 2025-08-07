@@ -11,14 +11,15 @@
     - [📅 Monthly Revenue Aggregation](#monthly-revenue-aggregation)
     - [🥇 Top 10 Customers by Revenue](#top-10-customers-by-revenue)
   - [🎯 Step 4. Customer Segmentation using RFM](#step-4-customer-segmentation-using-rfm)
-  - [📊 Step 5. Views for Power BI Dashboard](#step-5-views-for-power-bi-dashboard)
-  - [🔍 Step 6. Advanced Sales & Operational Analysis](#step-6-advanced-sales--operational-analysis)
+  - [🔍 Step 5. Advanced Sales & Operational Analysis](#step-5-advanced-sales--operational-analysis)
+  - [📊 Step 6. Power BI Dashboard](#power-bi-dashboard)
+ 
 
 ## 🔖 Project Overview
 
 This project presents a comprehensive analysis of sales performance and customer behavior for Faragir Sanat Mehrbin, a laboratory equipment manufacturing company. The objective is to clean raw transactional data, generate actionable KPIs, and create segmentation and trend insights that can drive business decisions.
 
-Using SQL, we processed and analyzed 3 years of transaction-level data (2018–2020), building views and reports for integration into dashboards (Power BI / Excel). Final outputs were saved as `.xlsx` files and structured for business intelligence reporting.
+Using SQL, we processed and analyzed 3 years of transaction-level data (2018–2020), building views and reports for integration into dashboards (Power BI). Final outputs were saved as `.xlsx` files and structured for business intelligence reporting.
 
 ---
 
@@ -189,6 +190,51 @@ GROUP BY SalesChannel;
 
 📁 **Full dataset available in** `sales KPI .xlsx` → **Sheet:** `Sales Channel Revenue`
 
+### 📊 Revenue Breakdown by BranchCode
+
+Understanding the revenue contribution of each branch enables **Faragir Sanat Mehrbin** to identify high-performing locations and guide strategic investment. This section calculates the number of orders, total revenue, and each branch’s percentage contribution to overall sales.
+
+---
+
+### 🧮 Code
+
+```sql
+-- Revenue Breakdown by Branchcode
+SELECT
+  BranchCode,
+  ROUND(SUM(QuantityOrdered * UnitSalePrice), 2) AS total_revenue,
+  COUNT(DISTINCT InvoiceNumber) AS total_orders,
+  ROUND(
+    SUM(QuantityOrdered * UnitSalePrice) * 100.0 /
+    (SELECT SUM(QuantityOrdered * UnitSalePrice) FROM sales_data), 1
+  ) AS revenue_percent
+FROM sales_data
+GROUP BY BranchCode
+ORDER BY total_revenue DESC;
+```
+
+---
+
+### 📎 Output:
+
+<details>
+<summary>📊 Output </summary>
+
+<div style="overflow-x: auto">
+
+| BranchCode | total_revenue  | total_orders | revenue_percent |
+|------------|---------------:|-------------:|----------------:|
+| MHD004     | 17,577,463.4   | 1,660        | 21.3            |
+| ISF002     | 16,812,732.1   | 1,647        | 20.3            |
+| TBZ005     | 16,437,873.8   | 1,563        | 19.9            |
+| SHZ003     | 16,007,197.8   | 1,565        | 19.4            |
+| TEH001     | 15,857,459.5   | 1,556        | 19.2            |
+
+</div>
+</details>
+
+📁 **Full dataset available in** `sales KPI .xlsx` → **Sheet:** `Revenue by Branch Code`
+
 ### 📅 Monthly Revenue Aggregation
 
 Analyzing revenue trends over time helps Faragir Sanat Mehrbin identify seasonality, growth periods, and periods requiring strategic intervention. This query aggregates total monthly revenue based on the `SalesOrderDate`.
@@ -348,109 +394,7 @@ FROM vw_customer_rfm;
 📁 Full segmentation results are available in the `customer segmentation.xlsx` file.
 
 
-## 📊 Step 5.Views for Power BI Dashboard
-
-To support visual reporting in Power BI, we created structured views for key monthly metrics, growth tracking, and customer cohort analysis. These views simplify data transformations and support plug-and-play integration with BI tools.
-
----
-
-### 🧮 SQL Code
-
-```sql
--- 🟦 Monthly KPIs View
-CREATE VIEW vw_monthly_kpis AS
-SELECT
-  DATE(SalesOrderDate, 'start of month') AS month,
-  SUM(QuantityOrdered * UnitSalePrice) AS total_revenue,
-  COUNT(DISTINCT InvoiceNumber) AS total_orders,
-  COUNT(DISTINCT CustomerID) AS unique_customers
-FROM sales_data
-GROUP BY month;
-
--- 🟩 Monthly Growth View
-CREATE VIEW vw_monthly_growth AS
-WITH monthly_sales AS (
-  SELECT
-    DATE(SalesOrderDate, 'start of month') AS month,
-    SUM(QuantityOrdered * UnitSalePrice) AS revenue
-  FROM sales_data
-  GROUP BY month
-)
-SELECT
-  month,
-  revenue,
-  LAG(revenue) OVER (ORDER BY month) AS prev_month,
-  ROUND(
-    (revenue - LAG(revenue) OVER (ORDER BY month)) * 100.0 /
-    NULLIF(LAG(revenue) OVER (ORDER BY month), 0), 2
-  ) AS percent_growth
-FROM monthly_sales;
-
--- 🟨 Customer Cohort View
-CREATE VIEW vw_customer_cohorts AS
-WITH first_purchase AS (
-  SELECT CustomerID, MIN(DATE(SalesOrderDate, 'start of month')) AS cohort_month
-  FROM sales_data
-  GROUP BY CustomerID
-),
-orders AS (
-  SELECT
-    s.CustomerID,
-    DATE(s.SalesOrderDate, 'start of month') AS order_month,
-    f.cohort_month
-  FROM sales_data s
-  JOIN first_purchase f ON s.CustomerID = f.CustomerID
-),
-cohort_data AS (
-  SELECT
-    cohort_month,
-    STRFTIME('%m', order_month) - STRFTIME('%m', cohort_month) AS months_since_first,
-    COUNT(DISTINCT CustomerID) AS retained_customers
-  FROM orders
-  GROUP BY cohort_month, months_since_first
-)
-SELECT * FROM cohort_data;
-```
-
----
-
-### 📎 Output Previews:
-
-<details> <summary>📊 Monthly KPIs</summary>
-
-| month      | total_revenue | total_orders | unique_customers |
-|------------|----------------|---------------|------------------|
-| 5/1/2018   | 75,629.6       | 8             | 8                |
-| 6/1/2018   | 2,454,752.7    | 252           | 223              |
-| 7/1/2018   | 2,707,550.4    | 261           | 238              |
-
-</details>
-
-<details> <summary>📈 Monthly Revenue Growth</summary>
-
-| month      | revenue     | prev_month  | percent_growth |
-|------------|-------------|-------------|----------------|
-| 5/1/2018   | 75,629.6    |             |                |
-| 6/1/2018   | 2,454,752.7 | 75,629.6    | 3145.76        |
-| 7/1/2018   | 2,707,550.4 | 2,454,752.7 | 10.30          |
-| 8/1/2018   | 2,909,421.4 | 2,707,550.4 | 7.46           |
-
-</details>
-
-<details> <summary>👥 Customer Cohorts</summary>
-
-| cohort_month | months_since_first | retained_customers |
-|--------------|--------------------|---------------------|
-| 5/1/2018     | -4                 | 4                   |
-| 5/1/2018     | -3                 | 3                   |
-| 5/1/2018     | -2                 | 1                   |
-
-</details>
-
-📁 Data exported in "views for dashboards.xlsx" for direct Power BI/Excel use.
-
-
-## 🔍 Step 6.Advanced Sales & Operational Analysis
+## 🔍 Step 5.Advanced Sales & Operational Analysis
 
 To extract deeper insights from the sales dataset, a set of advanced SQL queries were developed to evaluate profitability, delivery efficiency, representative performance, repeat customer rate, and financial health over time.
 
@@ -579,3 +523,16 @@ ORDER BY month;
 ---
 
 📁 *Raw results exported as* `advance analysis.xlsx` *for integration with Power BI dashboards and final report delivery.*
+
+
+## 📊 Step 6.Views for Power BI Dashboard
+
+After cleaning and transforming the data using SQL and RFM techniques, the final datasets were imported into Power BI to create an interactive sales performance dashboard. This dashboard integrates all key metrics, including revenue trends, sales channel analysis, branch performance, customer segmentation, and top customer analysis.
+
+The Power BI dashboard was built using the tables and views created in the previous steps, along with additional DAX formulas for dynamic calculations and segmentation. The dashboard file and published link are both available in the dashboard folder of this repository.
+
+🔗 Access the dashboard file and online report:
+
+* Power BI dashboard file: ![Power BI Dashboard](dashboard/Dashboard.png)
+* [View Interactive Power BI Dashboard](https://app.powerbi.com/reportEmbed?reportId=765cf44d-9839-4599-8e0d-d3a206f3b498&autoAuth=true&ctid=7de83be1-f219-40b6-a72f-e4cd6f300329)
+

@@ -18,6 +18,19 @@ SELECT
 FROM sales_data
 GROUP BY SalesChannel;
 
+-- 🔹 Revenue by BranchCode
+SELECT
+  BranchCode,
+  ROUND(SUM(QuantityOrdered * UnitSalePrice), 2) AS total_revenue,
+  COUNT(DISTINCT InvoiceNumber) AS total_orders,
+  ROUND(
+    SUM(QuantityOrdered * UnitSalePrice) * 100.0 /
+    (SELECT SUM(QuantityOrdered * UnitSalePrice) FROM sales_data), 1
+  ) AS revenue_percent
+FROM sales_data
+GROUP BY BranchCode
+ORDER BY total_revenue DESC;
+
 -- 🔹 Top 10 customers by revenue:
 SELECT
   CustomerID,
