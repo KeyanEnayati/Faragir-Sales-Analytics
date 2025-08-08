@@ -534,5 +534,4 @@ The Power BI dashboard was built using the tables and views created in the previ
 🔗 Access the dashboard file and online report:
 
 * Power BI dashboard file: ![Power BI Dashboard](dashboard/Dashboard.png)
-* [View Interactive Power BI Dashboard](https://app.powerbi.com/reportEmbed?reportId=765cf44d-9839-4599-8e0d-d3a206f3b498&autoAuth=true&ctid=7de83be1-f219-40b6-a72f-e4cd6f300329](https://app.powerbi.com/view?r=eyJrIjoiMDVkZDg5ZjktZmJmNy00YmZhLTkzOGMtNDBiMjhiZTNkYWRiIiwidCI6IjdkZTgzYmUxLWYyMTktNDBiNi1hNzJmLWU0Y2Q2ZjMwMDMyOSJ9)
-
+* [View Interactive Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiMDVkZDg5ZjktZmJmNy00YmZhLTkzOGMtNDBiMjhiZTNkYWRiIiwidCI6IjdkZTgzYmUxLWYyMTktNDBiNi1hNzJmLWU0Y2Q2ZjMwMDMyOSJ9)
